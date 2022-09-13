@@ -41,7 +41,7 @@ AppAsset::register($this);
     } else {
         // $menuItems[] = ['label' => 'Beranda', 'url' => ['/site/index']],
         $menuItems[] = ['label' => 'Simulasi', 'url' => ['/simulasi']];
-        $menuItems[] = ['label' => 'Laporan', 'url' => ['/laporan']];
+        // $menuItems[] = ['label' => 'Laporan', 'url' => ['/laporan']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
             . Html::submitButton(
