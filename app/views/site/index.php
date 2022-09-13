@@ -14,7 +14,7 @@ $this->title = Yii::$app->name;
         <p class="lead">Antrian Pasien Puskesmas Lintau Buo.</p>
         <br>
 
-        <p><a class="btn btn-lg btn-success" href="<?= Url::to(['/pasien']) ?>">Mulai Simulasi</a></p>
+        <p><a class="btn btn-lg btn-success" href="<?= Url::to(['/simulasi']) ?>">Mulai Simulasi</a></p>
     </div>
 
     <div class="body-content">
