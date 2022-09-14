@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Pasien;
+use app\models\Timeline;
 
 /**
- * PasienSearch represents the model behind the search form of `app\models\Pasien`.
+ * TimelineSearch represents the model behind the search form of `app\models\Timeline`.
  */
-class PasienSearch extends Pasien
+class TimelineSearch extends Timeline
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class PasienSearch extends Pasien
     public function rules()
     {
         return [
-            [['id', 'simulasi_id'], 'integer'],
-            [['waktu_kedatangan'], 'safe'],
+            [['id', 'simulasi_id', 'poli_id', 'pasien_id', 'status', 'jumlah_antrian'], 'integer'],
+            [['waktu'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class PasienSearch extends Pasien
      */
     public function search($params)
     {
-        $query = Pasien::find();
+        $query = Timeline::find();
 
         // add conditions that should always apply here
 
@@ -60,7 +60,11 @@ class PasienSearch extends Pasien
         $query->andFilterWhere([
             'id' => $this->id,
             'simulasi_id' => $this->simulasi_id,
-            'waktu_kedatangan' => $this->waktu_kedatangan,
+            'waktu' => $this->waktu,
+            'poli_id' => $this->poli_id,
+            'pasien_id' => $this->pasien_id,
+            'status' => $this->status,
+            'jumlah_antrian' => $this->jumlah_antrian,
         ]);
 
         return $dataProvider;

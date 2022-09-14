@@ -30,9 +30,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::button('Duplikat', [
             'value' => Url::to(['duplicate', 'id' => $model->id]), 
             'title' => 'Duplikat', 
-            'class' => 'showModalButton btn btn-success'
+            'class' => 'showModalButton btn btn-success d-none'
         ]); ?>
-        <?= Html::a('Lihat Hasil', ['result', 'id' => $model->id], ['class' => 'btn btn-info float-right']) ?>
+        <?= Html::a('Lihat Hasil', ['hasil', 'id' => $model->id], ['class' => 'btn btn-info float-right ml-1 disabled']) ?>
+        <?= Html::a('Proses Simulasi', ['proses', 'id' => $model->id], ['class' => 'btn btn-warning float-right disabled']) ?>
     </p>
 
     <?= DetailView::widget([
@@ -41,6 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             // 'id',
             'nama',
+            'tanggal',
             'keterangan:ntext',
         ],
     ]) ?>
@@ -171,7 +173,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             // 'id',
             // 'simulasi_id',
-            'tanggal',
             'waktu_kedatangan',
             [
                 'attribute' => 'Alur Kunjungan',

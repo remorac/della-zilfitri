@@ -9,10 +9,12 @@ use Yii;
  *
  * @property int $id
  * @property string $nama
+ * @property string $tanggal
  * @property string|null $keterangan
  *
  * @property Pasien[] $pasiens
  * @property Poli[] $polis
+ * @property Timeline[] $timelines
  */
 class Simulasi extends \yii\db\ActiveRecord
 {
@@ -30,7 +32,8 @@ class Simulasi extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nama'], 'required'],
+            [['nama', 'tanggal'], 'required'],
+            [['tanggal'], 'safe'],
             [['keterangan'], 'string'],
             [['nama'], 'string', 'max' => 255],
         ];
@@ -44,6 +47,7 @@ class Simulasi extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nama' => 'Nama',
+            'tanggal' => 'Tanggal',
             'keterangan' => 'Keterangan',
         ];
     }
@@ -66,5 +70,15 @@ class Simulasi extends \yii\db\ActiveRecord
     public function getPolis()
     {
         return $this->hasMany(Poli::className(), ['simulasi_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Timelines]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTimelines()
+    {
+        return $this->hasMany(Timeline::className(), ['simulasi_id' => 'id']);
     }
 }

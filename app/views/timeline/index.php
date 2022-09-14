@@ -6,18 +6,18 @@ use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\PasienSearch */
+/* @var $searchModel app\models\TimelineSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Pasiens';
+$this->title = 'Timelines';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="pasien-index">
+<div class="timeline-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Pasien', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Timeline', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -31,15 +31,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'simulasi_id',
-            'tanggal',
-            'waktu_kedatangan',
+            'waktu',
+            'poli_id',
+            'pasien_id',
+            //'status',
+            //'jumlah_antrian',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                },
-                'headerOptions' => ['style' => 'width:1px; white-space:nowrap;'],
-                'contentOptions' => ['style' => 'width:1px; white-space:nowrap;'],
+                }
             ],
         ],
     ]); ?>

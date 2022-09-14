@@ -7,10 +7,12 @@ use app\models\PasienPoli;
 use app\models\Poli;
 use app\models\Simulasi;
 use app\models\SimulasiSearch;
+use app\models\Timeline;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\VarDumper;
 
 /**
  * SimulasiController implements the CRUD actions for Simulasi model.
@@ -253,5 +255,33 @@ class SimulasiController extends Controller
             ]);
         }
         return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionProses($id)
+    {
+        $simulasi = $this->findModel($id);
+        $pasienFirst = Pasien::find()->where(['simulasi_id' => $id])->orderBy('waktu_kedatangan')->one();
+        if (!$pasienFirst) return false;
+
+        $time_start = strtotime($simulasi->tanggal.' '.$pasienFirst->waktu_kedatangan);
+        
+        $timeline                 = new Timeline();
+        $timeline->simulasi_id    = $id;
+        $timeline->waktu          = date('H:i', $time_start);
+        $timeline->poli_id        = $pasienFirst->pasienPolis[0]->poli_id;
+        $timeline->pasien_id      = $pasienFirst->id;
+        $timeline->jumlah_antrian = Pasien::find()->where(['simulasi_id' => $id])->andWhere([
+            'and',
+            ['!=', 'id', $pasienFirst->id],
+            ['<=', 'waktu_kedatangan', $timeline->waktu],
+        ])->count();
+        if (!$timeline->save()) Yii::$app->session->addFlash('error', \yii\helpers\Json::encode($timeline->errors));
+
+
+        $loop = true;
+        while ($loop) {
+            if (1 == 1) $loop = false;
+        }
+        echo($time_start); exit;
     }
 }

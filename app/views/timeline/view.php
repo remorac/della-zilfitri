@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Poli */
+/* @var $model app\models\Timeline */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Polis', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Timelines', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="poli-view">
+<div class="timeline-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -32,14 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'simulasi_id',
-            'nama_poli',
-            'jumlah_loket',
-            'waktu_buka',
-            'waktu_tutup',
-            'waktu_mulai_istirahat',
-            'waktu_selesai_istirahat',
-            'durasi_pelayanan_min',
-            'durasi_pelayanan_max',
+            'waktu',
+            'poli_id',
+            'pasien_id',
+            'status',
+            'jumlah_antrian',
         ],
     ]) ?>
 

@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\PoliSearch */
+/* @var $model app\models\TimelineSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="poli-search">
+<div class="timeline-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -19,21 +19,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'simulasi_id') ?>
 
-    <?= $form->field($model, 'nama_poli') ?>
+    <?= $form->field($model, 'waktu') ?>
 
-    <?= $form->field($model, 'jumlah_loket') ?>
+    <?= $form->field($model, 'poli_id') ?>
 
-    <?= $form->field($model, 'waktu_buka') ?>
+    <?= $form->field($model, 'pasien_id') ?>
 
-    <?php // echo $form->field($model, 'waktu_tutup') ?>
+    <?php // echo $form->field($model, 'status') ?>
 
-    <?php // echo $form->field($model, 'waktu_mulai_istirahat') ?>
-
-    <?php // echo $form->field($model, 'waktu_selesai_istirahat') ?>
-
-    <?php // echo $form->field($model, 'durasi_pelayanan_min') ?>
-
-    <?php // echo $form->field($model, 'durasi_pelayanan_max') ?>
+    <?php // echo $form->field($model, 'jumlah_antrian') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

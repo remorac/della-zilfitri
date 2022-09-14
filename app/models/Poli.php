@@ -20,6 +20,7 @@ use Yii;
  *
  * @property PasienPoli[] $pasienPolis
  * @property Simulasi $simulasi
+ * @property Timeline[] $timelines
  */
 class Poli extends \yii\db\ActiveRecord
 {
@@ -82,5 +83,15 @@ class Poli extends \yii\db\ActiveRecord
     public function getSimulasi()
     {
         return $this->hasOne(Simulasi::className(), ['id' => 'simulasi_id']);
+    }
+
+    /**
+     * Gets query for [[Timelines]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTimelines()
+    {
+        return $this->hasMany(Timeline::className(), ['poli_id' => 'id']);
     }
 }

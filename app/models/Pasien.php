@@ -9,7 +9,6 @@ use Yii;
  *
  * @property int $id
  * @property int $simulasi_id
- * @property string $tanggal
  * @property string $waktu_kedatangan
  *
  * @property PasienPoli[] $pasienPolis
@@ -33,9 +32,9 @@ class Pasien extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['simulasi_id', 'tanggal', 'waktu_kedatangan'], 'required'],
+            [['simulasi_id', 'waktu_kedatangan'], 'required'],
             [['simulasi_id'], 'integer'],
-            [['tanggal', 'waktu_kedatangan'], 'safe'],
+            [['waktu_kedatangan'], 'safe'],
             [['simulasi_id'], 'exist', 'skipOnError' => true, 'targetClass' => Simulasi::className(), 'targetAttribute' => ['simulasi_id' => 'id']],
         ];
     }
@@ -48,7 +47,6 @@ class Pasien extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'simulasi_id' => 'Simulasi ID',
-            'tanggal' => 'Tanggal',
             'waktu_kedatangan' => 'Waktu Kedatangan',
         ];
     }

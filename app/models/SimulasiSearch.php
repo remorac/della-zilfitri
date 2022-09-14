@@ -18,7 +18,7 @@ class SimulasiSearch extends Simulasi
     {
         return [
             [['id'], 'integer'],
-            [['nama', 'keterangan'], 'safe'],
+            [['nama', 'tanggal', 'keterangan'], 'safe'],
         ];
     }
 
@@ -62,6 +62,7 @@ class SimulasiSearch extends Simulasi
         ]);
 
         $query->andFilterWhere(['like', 'nama', $this->nama])
+            ->andFilterWhere(['like', 'tanggal', $this->tanggal])
             ->andFilterWhere(['like', 'keterangan', $this->keterangan]);
 
         return $dataProvider;

@@ -15,14 +15,6 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'tanggal')->widget(DatePicker::class, [
-        'options' => ['placeholder' => 'Pilih tanggal'],
-        'pluginOptions' => [
-            'autoclose'=>true,
-            'format' => 'yyyy-mm-dd'
-        ]
-    ]) ?>
-
     <?= $form->field($model, 'waktu_kedatangan')->textInput() ?>
 
     <div class="card grid-view tabular-input mt-2 mb-2">
