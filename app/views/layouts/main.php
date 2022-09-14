@@ -40,13 +40,13 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
         // $menuItems[] = ['label' => 'Beranda', 'url' => ['/site/index']],
-        $menuItems[] = ['label' => 'Simulasi', 'url' => ['/simulasi']];
+        // $menuItems[] = ['label' => 'Simulasi', 'url' => ['/simulasi']];
         // $menuItems[] = ['label' => 'Laporan', 'url' => ['/laporan']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
             . Html::submitButton(
                 'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
+                ['class' => 'btn btn-link logout text-muted']
             )
             . Html::endForm()
             . '</li>';
