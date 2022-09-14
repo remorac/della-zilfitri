@@ -17,8 +17,8 @@ class PasienSearch extends Pasien
     public function rules()
     {
         return [
-            [['id', 'simulasi_id', 'poli_id', 'next_poli_id'], 'integer'],
-            [['tanggal', 'waktu_kedatangan', 'waktu_dilayani', 'waktu_selesai'], 'safe'],
+            [['id', 'simulasi_id'], 'integer'],
+            [['tanggal', 'waktu_kedatangan'], 'safe'],
         ];
     }
 
@@ -60,12 +60,8 @@ class PasienSearch extends Pasien
         $query->andFilterWhere([
             'id' => $this->id,
             'simulasi_id' => $this->simulasi_id,
-            'poli_id' => $this->poli_id,
             'tanggal' => $this->tanggal,
             'waktu_kedatangan' => $this->waktu_kedatangan,
-            'waktu_dilayani' => $this->waktu_dilayani,
-            'waktu_selesai' => $this->waktu_selesai,
-            'next_poli_id' => $this->next_poli_id,
         ]);
 
         return $dataProvider;

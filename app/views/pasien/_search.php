@@ -19,17 +19,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'simulasi_id') ?>
 
-    <?= $form->field($model, 'poli_id') ?>
-
     <?= $form->field($model, 'tanggal') ?>
 
     <?= $form->field($model, 'waktu_kedatangan') ?>
-
-    <?php // echo $form->field($model, 'waktu_dilayani') ?>
-
-    <?php // echo $form->field($model, 'waktu_selesai') ?>
-
-    <?php // echo $form->field($model, 'next_poli_id') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

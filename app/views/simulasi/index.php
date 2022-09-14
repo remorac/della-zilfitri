@@ -9,7 +9,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\SimulasiSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Simulasis';
+$this->title = 'Simulasi';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="simulasi-index">

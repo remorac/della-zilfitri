@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\Pasien;
+use app\models\PasienPoli;
 use app\models\Poli;
 use app\models\Simulasi;
 use app\models\SimulasiSearch;
@@ -197,6 +199,56 @@ class SimulasiController extends Controller
             }
         } else if (Yii::$app->request->isAjax) {
             return $this->renderAjax('_form-poli', [
+                'model' => $model
+            ]);
+        }
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+
+
+    public function actionPasienCreate($simulasi_id)
+    {
+        $simulasi = $this->findModel($simulasi_id);
+        $model = new Pasien();
+        $model->simulasi_id = $simulasi_id;
+        $model->pasienPolis = [new PasienPoli()];
+
+        Yii::$app->session->set('simulasi_id', $simulasi_id);
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->pasienPolis = Yii::$app->request->post('PasienPoli', []);
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->simulasi_id]);
+            } else {
+                Yii::$app->session->addFlash('error', \yii\helpers\Json::encode($model->errors));
+            }
+        } else if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_form-pasien', [
+                'model' => $model
+            ]);
+        }
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionPasienUpdate($id)
+    {
+        $model = Pasien::findOne($id);
+        if (!$model) throw new NotFoundHttpException('The requested data does not exist.');
+
+        Yii::$app->session->set('simulasi_id', $model->simulasi_id);
+
+        if (!$model->pasienPolis) $model->pasienPolis = [new PasienPoli()];
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->pasienPolis = Yii::$app->request->post('PasienPoli', []);
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->simulasi_id]);
+            } else {
+                Yii::$app->session->addFlash('error', \yii\helpers\Json::encode($model->errors));
+            }
+        } else if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_form-pasien', [
                 'model' => $model
             ]);
         }

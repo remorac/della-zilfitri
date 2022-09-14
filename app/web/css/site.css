@@ -106,3 +106,15 @@ button[type=submit] {
     color: #dc3545;
     font-size: small;
 }
+
+.btn.btn-xs {
+    height: 20px;
+    padding:0 2px;
+    line-height: 1;
+}
+.btn.btn-icon.btn-xs {
+    width: 22px;
+}
+.btn.btn-xs i {
+    font-size: 0.8rem;
+}

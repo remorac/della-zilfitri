@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Simulasi */
 
 $this->title = 'Create Simulasi';
-$this->params['breadcrumbs'][] = ['label' => 'Simulasis', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Simulasi', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="simulasi-create">

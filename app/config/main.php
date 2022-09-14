@@ -8,7 +8,7 @@ $params = array_merge(
 
 return [
     'id' => 'profile-matching',
-    'name' => 'Simulasi',
+    'name' => 'Simulasi Rawat Jalan',
     'basePath' => dirname(__DIR__),
     'language' => 'id',
     'bootstrap' => ['log'],

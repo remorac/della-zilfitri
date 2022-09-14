@@ -31,17 +31,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'simulasi_id',
-            'poli_id',
             'tanggal',
             'waktu_kedatangan',
-            //'waktu_dilayani',
-            //'waktu_selesai',
-            //'next_poli_id',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                }
+                },
+                'headerOptions' => ['style' => 'width:1px; white-space:nowrap;'],
+                'contentOptions' => ['style' => 'width:1px; white-space:nowrap;'],
             ],
         ],
     ]); ?>

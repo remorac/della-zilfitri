@@ -32,12 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'simulasi_id',
-            'poli_id',
             'tanggal',
             'waktu_kedatangan',
-            'waktu_dilayani',
-            'waktu_selesai',
-            'next_poli_id',
         ],
     ]) ?>
 

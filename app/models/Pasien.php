@@ -9,19 +9,16 @@ use Yii;
  *
  * @property int $id
  * @property int $simulasi_id
- * @property int $poli_id
  * @property string $tanggal
  * @property string $waktu_kedatangan
- * @property string $waktu_dilayani
- * @property string $waktu_selesai
- * @property int|null $next_poli_id
  *
- * @property Poli $nextPoli
- * @property Poli $poli
+ * @property PasienPoli[] $pasienPolis
  * @property Simulasi $simulasi
  */
 class Pasien extends \yii\db\ActiveRecord
 {
+    use \mdm\behaviors\ar\RelationTrait;
+    
     /**
      * {@inheritdoc}
      */
@@ -36,11 +33,9 @@ class Pasien extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['simulasi_id', 'poli_id', 'tanggal', 'waktu_kedatangan', 'waktu_dilayani', 'waktu_selesai'], 'required'],
-            [['simulasi_id', 'poli_id', 'next_poli_id'], 'integer'],
-            [['tanggal', 'waktu_kedatangan', 'waktu_dilayani', 'waktu_selesai'], 'safe'],
-            [['poli_id'], 'exist', 'skipOnError' => true, 'targetClass' => Poli::className(), 'targetAttribute' => ['poli_id' => 'id']],
-            [['next_poli_id'], 'exist', 'skipOnError' => true, 'targetClass' => Poli::className(), 'targetAttribute' => ['next_poli_id' => 'id']],
+            [['simulasi_id', 'tanggal', 'waktu_kedatangan'], 'required'],
+            [['simulasi_id'], 'integer'],
+            [['tanggal', 'waktu_kedatangan'], 'safe'],
             [['simulasi_id'], 'exist', 'skipOnError' => true, 'targetClass' => Simulasi::className(), 'targetAttribute' => ['simulasi_id' => 'id']],
         ];
     }
@@ -53,33 +48,23 @@ class Pasien extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'simulasi_id' => 'Simulasi ID',
-            'poli_id' => 'Poli ID',
             'tanggal' => 'Tanggal',
             'waktu_kedatangan' => 'Waktu Kedatangan',
-            'waktu_dilayani' => 'Waktu Dilayani',
-            'waktu_selesai' => 'Waktu Selesai',
-            'next_poli_id' => 'Next Poli ID',
         ];
     }
 
     /**
-     * Gets query for [[NextPoli]].
+     * Gets query for [[PasienPolis]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getNextPoli()
+    public function getPasienPolis()
     {
-        return $this->hasOne(Poli::className(), ['id' => 'next_poli_id']);
+        return $this->hasMany(PasienPoli::className(), ['pasien_id' => 'id']);
     }
-
-    /**
-     * Gets query for [[Poli]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPoli()
+    public function setPasienPolis($value)
     {
-        return $this->hasOne(Poli::className(), ['id' => 'poli_id']);
+        $this->loadRelated('pasienPolis', $value);
     }
 
     /**
@@ -90,5 +75,14 @@ class Pasien extends \yii\db\ActiveRecord
     public function getSimulasi()
     {
         return $this->hasOne(Simulasi::className(), ['id' => 'simulasi_id']);
+    }
+
+    public function getPasienPolisText()
+    {
+        $array = [];
+        foreach ($this->pasienPolis as $pasienPoli) {
+            $array[] = $pasienPoli->poli->nama_poli;
+        }
+        return implode(', ', $array);
     }
 }

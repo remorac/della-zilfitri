@@ -9,9 +9,9 @@ $this->title = Yii::$app->name;
 <div class="site-index">
 
     <div class="jumbotron text-center bg-transparent">
-        <h1 class="display-4">Simulasi</h1>
+        <h1 class="display-4">tesis</h1>
 
-        <p class="lead">Antrian Pasien Puskesmas Lintau Buo.</p>
+        <p class="lead">Simulasi Sistem Pelayanan Rawat Jalan Pasien <br>Menggunakan Simulasi Kejadian Diskrit (DES) <br>(Studi kasus di Puskesmas Lintau Buo)</p>
         <br>
 
         <p><a class="btn btn-lg btn-success" href="<?= Url::to(['/simulasi']) ?>">Mulai Simulasi</a></p>

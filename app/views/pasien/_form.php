@@ -14,17 +14,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'simulasi_id')->textInput() ?>
 
-    <?= $form->field($model, 'poli_id')->textInput() ?>
-
     <?= $form->field($model, 'tanggal')->textInput() ?>
 
     <?= $form->field($model, 'waktu_kedatangan')->textInput() ?>
-
-    <?= $form->field($model, 'waktu_dilayani')->textInput() ?>
-
-    <?= $form->field($model, 'waktu_selesai')->textInput() ?>
-
-    <?= $form->field($model, 'next_poli_id')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

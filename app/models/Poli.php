@@ -18,8 +18,7 @@ use Yii;
  * @property int|null $durasi_pelayanan_min
  * @property int|null $durasi_pelayanan_max
  *
- * @property Pasien[] $pasiens
- * @property Pasien[] $pasiens0
+ * @property PasienPoli[] $pasienPolis
  * @property Simulasi $simulasi
  */
 class Poli extends \yii\db\ActiveRecord
@@ -66,23 +65,13 @@ class Poli extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Pasiens]].
+     * Gets query for [[PasienPolis]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPasiens()
+    public function getPasienPolis()
     {
-        return $this->hasMany(Pasien::className(), ['poli_id' => 'id']);
-    }
-
-    /**
-     * Gets query for [[Pasiens0]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPasiens0()
-    {
-        return $this->hasMany(Pasien::className(), ['next_poli_id' => 'id']);
+        return $this->hasMany(PasienPoli::className(), ['poli_id' => 'id']);
     }
 
     /**

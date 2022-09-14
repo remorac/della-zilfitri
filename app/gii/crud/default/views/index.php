@@ -42,7 +42,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'tableOptions' => ['class' => 'table table-hover table-bordered grid-view'],
         'dataProvider' => $dataProvider,
         <?= !empty($generator->searchModelClass) ? "'filterModel' => \$searchModel,\n        'columns' => [\n" : "'columns' => [\n"; ?>
-            ['class' => 'yii\grid\SerialColumn'],
+            [
+                'class' => 'yii\grid\SerialColumn',
+                'headerOptions' => ['style' => 'width:1px; white-space:nowrap;'],
+                'contentOptions' => ['style' => 'width:1px; white-space:nowrap;'],
+            ],,
 
 <?php
 $count = 0;
@@ -69,7 +73,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, $model, $key, $index, $column) {
                     return Url::toRoute([$action, <?= $generator->generateUrlParams() ?>]);
-                }
+                },
                 'headerOptions' => ['style' => 'width:1px; white-space:nowrap;'],
                 'contentOptions' => ['style' => 'width:1px; white-space:nowrap;'],
             ],
