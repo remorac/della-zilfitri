@@ -106,6 +106,23 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]).'</div>'; ?>
+    
+    <div>
+        <table class="table table-bordered detail-view">
+            <tr>
+                <th style="width:1px; white-space:nowrap">Utilisasi Keseluruhan</th>
+                <td class="text-right"><?= $model->getUtilization() ?></td>
+            </tr>
+            <tr>
+                <th style="width:1px; white-space:nowrap">Rata-rata Pasien Antri</th>
+                <td class="text-right"><?= $model->getQueueAverage() ?></td>
+            </tr>
+            <tr>
+                <th style="width:1px; white-space:nowrap">Rata-rata Pasien Dilayani</th>
+                <td class="text-right"><?= $model->getServingAverage() ?></td>
+            </tr>
+        </table>
+    </div>
 
     <br>
     <br>
@@ -178,6 +195,24 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
         ]).'</div>'; ?>
+
+        <div>
+            <table class="table table-bordered detail-view">
+                <tr>
+                    <th style="width:1px; white-space:nowrap">Utilisasi <?= $poli->nama_poli ?></th>
+                    <td class="text-right"><?= $model->getUtilization($poli->id) ?></td>
+                </tr>
+                <tr>
+                    <th style="width:1px; white-space:nowrap">Rata-rata Pasien Antri</th>
+                    <td class="text-right"><?= $model->getQueueAverage($poli->id) ?></td>
+                </tr>
+                <tr>
+                    <th style="width:1px; white-space:nowrap">Rata-rata Pasien Dilayani</th>
+                    <td class="text-right"><?= $model->getServingAverage($poli->id) ?></td>
+                </tr>
+            </table>
+        </div>
+
     <?php } ?>
 
 </div>

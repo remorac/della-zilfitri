@@ -167,6 +167,7 @@ class Simulasi extends \yii\db\ActiveRecord
                     'poli_id'     => $timelineServed->poli_id,
                     'status'      => Timeline::STATUS_SELESAI,
                 ])->orderBy('waktu DESC')->one()->waktu;
+                if ($time_served) $time_served = date('H:i', strtotime($this->tanggal.' '.$time_served. ' + 1 minute'));
                 if (!$time_served) $time_served = $timelineArrived->waktu;
 
                 $timelineServed->waktu = $time_served;
@@ -181,7 +182,7 @@ class Simulasi extends \yii\db\ActiveRecord
                 ])->one();
                 
                 if ($timelineFinished) {
-                    $duration      = mt_rand($timelineServed->poli->durasi_pelayanan_min, $timelineServed->poli->durasi_pelayanan_max);
+                    $duration      = mt_rand($timelineServed->poli->durasi_pelayanan_min ?? 0, $timelineServed->poli->durasi_pelayanan_max ?? 10);
                     $date          = $this->tanggal.' '.$timelineServed->waktu;
                     $time_finished = date('H:i', strtotime($date. ' + '.$duration.' minutes'));
 
@@ -236,5 +237,47 @@ class Simulasi extends \yii\db\ActiveRecord
                 $timeline->save();
             }
         }
+    }
+
+    public function getUtilization($poli_id = null)
+    {
+        $duration_total   = Timeline::find()->where(['simulasi_id' => $this->id])->sum('durasi');
+        $duration_serving = Timeline::find()->where(['simulasi_id' => $this->id, 'status' => Timeline::STATUS_DILAYANI])->sum('durasi');
+
+        if ($poli_id) {
+            $duration_total   = Timeline::find()->where(['simulasi_id' => $this->id, 'poli_id' => $poli_id])->sum('durasi');
+            $duration_serving = Timeline::find()->where(['simulasi_id' => $this->id, 'poli_id' => $poli_id, 'status' => Timeline::STATUS_DILAYANI])->sum('durasi');
+        }
+
+        if (!$duration_total) return null;
+        return Yii::$app->formatter->asPercent($duration_serving/$duration_total);
+    }
+
+    public function getQueueAverage($poli_id = null)
+    {
+        $duration_total = Timeline::find()->where(['simulasi_id' => $this->id])->sum('durasi');
+        $queue_total    = Timeline::find()->where(['simulasi_id' => $this->id])->sum('jumlah_antri * durasi');
+
+        if ($poli_id) {
+            $duration_total = Timeline::find()->where(['simulasi_id' => $this->id, 'poli_id' => $poli_id])->sum('durasi');
+            $queue_total    = Timeline::find()->where(['simulasi_id' => $this->id, 'poli_id' => $poli_id])->sum('jumlah_antri * durasi');
+        }
+
+        if (!$duration_total) return null;
+        return Yii::$app->formatter->asDecimal(($queue_total/$duration_total), 2). ' orang per menit';
+    }
+
+    public function getServingAverage($poli_id = null)
+    {
+        $duration_total = Timeline::find()->where(['simulasi_id' => $this->id])->sum('durasi');
+        $serving_total  = Timeline::find()->where(['simulasi_id' => $this->id])->sum('jumlah_dilayani * durasi');
+
+        if ($poli_id) {
+            $duration_total = Timeline::find()->where(['simulasi_id' => $this->id, 'poli_id' => $poli_id])->sum('durasi');
+            $serving_total  = Timeline::find()->where(['simulasi_id' => $this->id, 'poli_id' => $poli_id])->sum('jumlah_dilayani * durasi');
+        }
+
+        if (!$duration_total) return null;
+        return Yii::$app->formatter->asDecimal(($serving_total/$duration_total), 2). ' orang per menit';
     }
 }
