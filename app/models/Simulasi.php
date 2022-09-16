@@ -182,7 +182,10 @@ class Simulasi extends \yii\db\ActiveRecord
                 ])->one();
                 
                 if ($timelineFinished) {
-                    $duration      = mt_rand($timelineServed->poli->durasi_pelayanan_min ?? 0, $timelineServed->poli->durasi_pelayanan_max ?? 10);
+                    $duration = 0;
+                    while ($duration <= 0) {
+                        $duration = mt_rand($timelineServed->poli->durasi_pelayanan_min, $timelineServed->poli->durasi_pelayanan_max);
+                    }
                     $date          = $this->tanggal.' '.$timelineServed->waktu;
                     $time_finished = date('H:i', strtotime($date. ' + '.$duration.' minutes'));
 
