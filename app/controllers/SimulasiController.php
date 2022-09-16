@@ -262,7 +262,20 @@ class SimulasiController extends Controller
         $model = $this->findModel($id);
 
         if (Yii::$app->request->post()) {
-            $model->populateTimelines();
+            $valid = false;
+            while (!$valid) {
+                $model->populateTimelines();
+                $invalid = Timeline::find()->where([
+                    'and',
+                    ['simulasi_id' => $id],
+                    [
+                        'or',
+                        ['status' => Timeline::STATUS_DATANG],
+                        ['status' => Timeline::STATUS_DILAYANI],
+                    ],
+                ])->andWhere(['<=', 'durasi', 0])->one();
+                if ($invalid === null) $valid = true;
+            }
             $model->setTimes();
             $model->setStats();
             return $this->redirect(['timeline', 'id' => $id]);

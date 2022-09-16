@@ -168,7 +168,7 @@ class Simulasi extends \yii\db\ActiveRecord
                     'status'      => Timeline::STATUS_SELESAI,
                 ])->orderBy('waktu DESC')->one()->waktu;
                 if ($time_served) $time_served = date('H:i', strtotime($this->tanggal.' '.$time_served. ' + 1 minute'));
-                if (!$time_served) $time_served = $timelineArrived->waktu;
+                $time_served = max($time_served, $timelineArrived->waktu);
 
                 $timelineServed->waktu = $time_served;
                 $timelineServed->save();
