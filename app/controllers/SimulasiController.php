@@ -257,31 +257,19 @@ class SimulasiController extends Controller
         return $this->redirect(Yii::$app->request->referrer);
     }
 
-    public function actionProses($id)
+    public function actionTimeline($id)
     {
-        $simulasi = $this->findModel($id);
-        $pasienFirst = Pasien::find()->where(['simulasi_id' => $id])->orderBy('waktu_kedatangan')->one();
-        if (!$pasienFirst) return false;
+        $model = $this->findModel($id);
 
-        $time_start = strtotime($simulasi->tanggal.' '.$pasienFirst->waktu_kedatangan);
-        
-        $timeline                 = new Timeline();
-        $timeline->simulasi_id    = $id;
-        $timeline->waktu          = date('H:i', $time_start);
-        $timeline->poli_id        = $pasienFirst->pasienPolis[0]->poli_id;
-        $timeline->pasien_id      = $pasienFirst->id;
-        $timeline->jumlah_antrian = Pasien::find()->where(['simulasi_id' => $id])->andWhere([
-            'and',
-            ['!=', 'id', $pasienFirst->id],
-            ['<=', 'waktu_kedatangan', $timeline->waktu],
-        ])->count();
-        if (!$timeline->save()) Yii::$app->session->addFlash('error', \yii\helpers\Json::encode($timeline->errors));
+        if (Yii::$app->request->post()) {
+            $model->populateTimelines();
+            $model->setTimes();
+            $model->setStats();
+            return $this->redirect(['timeline', 'id' => $id]);
+        } 
 
-
-        $loop = true;
-        while ($loop) {
-            if (1 == 1) $loop = false;
-        }
-        echo($time_start); exit;
+        return $this->render('timeline', [
+            'model' => $model,
+        ]);
     }
 }

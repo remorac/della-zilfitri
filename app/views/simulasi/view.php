@@ -32,8 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'title' => 'Duplikat', 
             'class' => 'showModalButton btn btn-success d-none'
         ]); ?>
-        <?= Html::a('Lihat Hasil', ['hasil', 'id' => $model->id], ['class' => 'btn btn-info float-right ml-1 disabled']) ?>
-        <?= Html::a('Proses Simulasi', ['proses', 'id' => $model->id], ['class' => 'btn btn-warning float-right disabled']) ?>
+        <?= Html::a('Lihat Hasil', ['timeline', 'id' => $model->id], ['class' => 'btn btn-info float-right ml-1']) ?>
+        <?= Html::a('Proses Simulasi', ['timeline', 'id' => $model->id], [
+            'class' => 'btn btn-warning float-right',
+            'data-method' => 'post',
+        ]) ?>
     </p>
 
     <?= DetailView::widget([
@@ -105,11 +108,11 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'id',
             // 'simulasi_id',
             'nama_poli',
-            'jumlah_loket',
-            'waktu_buka',
-            'waktu_tutup',
-            'waktu_mulai_istirahat',
-            'waktu_selesai_istirahat',
+            // 'jumlah_loket',
+            // 'waktu_buka',
+            // 'waktu_tutup',
+            // 'waktu_mulai_istirahat',
+            // 'waktu_selesai_istirahat',
             'durasi_pelayanan_min',
             'durasi_pelayanan_max',
         ],
@@ -171,7 +174,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'headerOptions' => ['style' => 'width:1px; white-space:nowrap;'],
                 'contentOptions' => ['style' => 'width:1px; white-space:nowrap;'],
             ],
-            // 'id',
+            [
+                'attribute' => 'id',
+                'headerOptions' => ['style' => 'width:1px; white-space:nowrap;'],
+                'contentOptions' => ['style' => 'width:1px; white-space:nowrap;'],
+            ],
             // 'simulasi_id',
             'waktu_kedatangan',
             [

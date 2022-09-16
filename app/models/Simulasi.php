@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\debug\TimelineAsset;
 
 /**
  * This is the model class for table "simulasi".
@@ -80,5 +81,160 @@ class Simulasi extends \yii\db\ActiveRecord
     public function getTimelines()
     {
         return $this->hasMany(Timeline::className(), ['simulasi_id' => 'id']);
+    }
+
+    public function populateTimelines()
+    {
+        Timeline::deleteAll(['simulasi_id' => $this->id]);
+        foreach ($this->pasiens as $pasien) {
+            $first = true;
+            foreach ($pasien->pasienPolis as $pasienPoli) {
+
+                $timeline                 = new Timeline();
+                $timeline->simulasi_id    = $this->id;
+                $timeline->poli_id        = $pasienPoli->poli_id;
+                $timeline->pasien_id      = $pasienPoli->pasien_id;
+                $timeline->status         = Timeline::STATUS_DATANG;
+                if ($first) $timeline->waktu = $pasien->waktu_kedatangan;
+                $timeline->save();
+
+                $timeline              = new Timeline();
+                $timeline->simulasi_id = $this->id;
+                $timeline->poli_id     = $pasienPoli->poli_id;
+                $timeline->pasien_id   = $pasienPoli->pasien_id;
+                $timeline->status      = Timeline::STATUS_DILAYANI;
+                $timeline->save();
+
+                $timeline              = new Timeline();
+                $timeline->simulasi_id = $this->id;
+                $timeline->poli_id     = $pasienPoli->poli_id;
+                $timeline->pasien_id   = $pasienPoli->pasien_id;
+                $timeline->status      = Timeline::STATUS_SELESAI;
+                $timeline->save();
+
+                $first = false;
+            }
+        }
+        return;
+    }
+
+    public function setTimes()
+    {
+        $done = false;
+
+        while (!$done) {
+            $timelines = Timeline::find()->where(['waktu' => null])->all();
+            if (!$timelines) $done = true;
+
+            if (!$done) {
+                $timelineArrived = Timeline::find()->where([
+                    'simulasi_id' => $this->id,
+                    'status'      => Timeline::STATUS_DATANG,
+                ])->andWhere(['is not', 'waktu', null])->orderBy('waktu ASC')->one();
+
+                if (!$timelineArrived) continue;
+
+                $timelineServed = Timeline::find()->where([
+                    'simulasi_id' => $this->id,
+                    'poli_id'     => $timelineArrived->poli_id,
+                    'pasien_id'   => $timelineArrived->pasien_id,
+                    'status'      => Timeline::STATUS_DILAYANI,
+                    'waktu'       => null,
+                ])->one();
+
+                $offset = 1;
+                while (!$timelineServed) {
+
+                    $timelineArrived = Timeline::find()->where([
+                        'simulasi_id' => $this->id,
+                        'status'      => Timeline::STATUS_DATANG,
+                        ])->andWhere(['is not', 'waktu', null])->offset($offset)->orderBy('waktu ASC')->one();
+
+                    if ($timelineArrived) {
+                        $timelineServed = Timeline::find()->where([
+                            'simulasi_id' => $this->id,
+                            'poli_id'     => $timelineArrived->poli_id,
+                            'pasien_id'   => $timelineArrived->pasien_id,
+                            'status'      => Timeline::STATUS_DILAYANI,
+                            'waktu'       => null,
+                        ])->one();
+                    }
+                    $offset++;
+                }
+                
+                $time_served = Timeline::find()->where([
+                    'simulasi_id' => $this->id,
+                    'poli_id'     => $timelineServed->poli_id,
+                    'status'      => Timeline::STATUS_SELESAI,
+                ])->orderBy('waktu DESC')->one()->waktu;
+                if (!$time_served) $time_served = $timelineArrived->waktu;
+
+                $timelineServed->waktu = $time_served;
+                $timelineServed->save();
+
+                $timelineFinished = Timeline::find()->where([
+                    'simulasi_id' => $this->id,
+                    'poli_id'     => $timelineArrived->poli_id,
+                    'pasien_id'   => $timelineArrived->pasien_id,
+                    'status'      => Timeline::STATUS_SELESAI,
+                    'waktu'       => null,
+                ])->one();
+                
+                if ($timelineFinished) {
+                    $duration      = mt_rand($timelineServed->poli->durasi_pelayanan_min, $timelineServed->poli->durasi_pelayanan_max);
+                    $date          = $this->tanggal.' '.$timelineServed->waktu;
+                    $time_finished = date('H:i', strtotime($date. ' + '.$duration.' minutes'));
+
+                    $timelineFinished->waktu = $time_finished;
+                    $timelineFinished->save();
+
+                    $timelineServed->durasi = $duration;
+                    $timelineServed->save();
+
+                    $timelineArrived->durasi = (strtotime($this->tanggal.' '.$timelineServed->waktu) - strtotime($this->tanggal.' '.$timelineArrived->waktu)) / 60;
+                    $timelineArrived->save();
+
+                    $nextTimeline = Timeline::find()->where([
+                        'simulasi_id' => $this->id,
+                        'pasien_id'   => $timelineArrived->pasien_id,
+                        'status'      => Timeline::STATUS_DATANG,
+                        'waktu'       => null,
+                    ])->orderBy('id ASC')->one();
+
+                    if ($nextTimeline) {
+                        $nextTimeline->waktu = date('H:i', strtotime($this->tanggal.' '.$timelineFinished->waktu. ' + 1 minute'));
+                        $nextTimeline->save();
+                    }
+                }
+            }
+        }
+        return;
+    }
+
+    public function setStats()
+    {
+        $polis = Poli::find()->where(['simulasi_id' => $this->id])->all();
+        foreach ($polis as $poli) {
+            $timelines       = Timeline::find()->where(['poli_id' => $poli->id])->orderBy('waktu ASC')->all();
+            $jumlah_antri    = 0;
+            $jumlah_dilayani = 0;
+            $jumlah_selesai  = 0;
+                
+            foreach ($timelines as $timeline) {
+                if ($timeline->status == Timeline::STATUS_DATANG) $jumlah_antri++;
+                if ($timeline->status == Timeline::STATUS_DILAYANI) {
+                    $jumlah_antri--;
+                    $jumlah_dilayani++;
+                }
+                if ($timeline->status == Timeline::STATUS_SELESAI) {
+                    $jumlah_dilayani--;
+                    $jumlah_selesai++;
+                }
+                $timeline->jumlah_antri    = $jumlah_antri;
+                $timeline->jumlah_dilayani = $jumlah_dilayani;
+                $timeline->jumlah_selesai  = $jumlah_selesai;
+                $timeline->save();
+            }
+        }
     }
 }

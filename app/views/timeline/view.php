@@ -36,7 +36,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'poli_id',
             'pasien_id',
             'status',
-            'jumlah_antrian',
+            'jumlah_antri',
+            'jumlah_dilayani',
+            'jumlah_selesai',
         ],
     ]) ?>
 

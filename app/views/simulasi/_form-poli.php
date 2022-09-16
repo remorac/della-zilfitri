@@ -14,15 +14,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nama_poli')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'jumlah_loket')->textInput() ?>
+    <?= '' // $form->field($model, 'jumlah_loket')->textInput() ?>
 
-    <?= $form->field($model, 'waktu_buka')->textInput() ?>
+    <?= '' // $form->field($model, 'waktu_buka')->textInput() ?>
 
-    <?= $form->field($model, 'waktu_tutup')->textInput() ?>
+    <?= '' // $form->field($model, 'waktu_tutup')->textInput() ?>
 
-    <?= $form->field($model, 'waktu_mulai_istirahat')->textInput() ?>
+    <?= '' // $form->field($model, 'waktu_mulai_istirahat')->textInput() ?>
 
-    <?= $form->field($model, 'waktu_selesai_istirahat')->textInput() ?>
+    <?= '' // $form->field($model, 'waktu_selesai_istirahat')->textInput() ?>
 
     <?= $form->field($model, 'durasi_pelayanan_min')->textInput() ?>
 

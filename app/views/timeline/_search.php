@@ -27,7 +27,11 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'status') ?>
 
-    <?php // echo $form->field($model, 'jumlah_antrian') ?>
+    <?php // echo $form->field($model, 'jumlah_antri') ?>
+
+    <?php // echo $form->field($model, 'jumlah_dilayani') ?>
+
+    <?php // echo $form->field($model, 'jumlah_selesai') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

@@ -22,7 +22,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'status')->textInput() ?>
 
-    <?= $form->field($model, 'jumlah_antrian')->textInput() ?>
+    <?= $form->field($model, 'jumlah_antri')->textInput() ?>
+
+    <?= $form->field($model, 'jumlah_dilayani')->textInput() ?>
+
+    <?= $form->field($model, 'jumlah_selesai')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

@@ -17,7 +17,7 @@ class TimelineSearch extends Timeline
     public function rules()
     {
         return [
-            [['id', 'simulasi_id', 'poli_id', 'pasien_id', 'status', 'jumlah_antrian'], 'integer'],
+            [['id', 'simulasi_id', 'poli_id', 'pasien_id', 'status', 'durasi', 'jumlah_antri', 'jumlah_dilayani', 'jumlah_selesai'], 'integer'],
             [['waktu'], 'safe'],
         ];
     }
@@ -46,6 +46,7 @@ class TimelineSearch extends Timeline
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['waktu' => SORT_ASC]],
         ]);
 
         $this->load($params);
@@ -64,7 +65,10 @@ class TimelineSearch extends Timeline
             'poli_id' => $this->poli_id,
             'pasien_id' => $this->pasien_id,
             'status' => $this->status,
-            'jumlah_antrian' => $this->jumlah_antrian,
+            'durasi' => $this->durasi,
+            'jumlah_antri' => $this->jumlah_antri,
+            'jumlah_dilayani' => $this->jumlah_dilayani,
+            'jumlah_selesai' => $this->jumlah_selesai,
         ]);
 
         return $dataProvider;

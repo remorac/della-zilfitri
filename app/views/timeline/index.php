@@ -27,7 +27,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            [
+                'class' => 'yii\grid\SerialColumn',
+                'headerOptions' => ['style' => 'width:1px; white-space:nowrap;'],
+                'contentOptions' => ['style' => 'width:1px; white-space:nowrap;'],
+            ],,
 
             'id',
             'simulasi_id',
@@ -35,12 +39,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'poli_id',
             'pasien_id',
             //'status',
-            //'jumlah_antrian',
+            //'jumlah_antri',
+            //'jumlah_dilayani',
+            //'jumlah_selesai',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                }
+                },
+                'headerOptions' => ['style' => 'width:1px; white-space:nowrap;'],
+                'contentOptions' => ['style' => 'width:1px; white-space:nowrap;'],
             ],
         ],
     ]); ?>
