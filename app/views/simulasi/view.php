@@ -113,8 +113,16 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'waktu_tutup',
             // 'waktu_mulai_istirahat',
             // 'waktu_selesai_istirahat',
-            'durasi_pelayanan_min',
-            'durasi_pelayanan_max',
+            [
+                'attribute' => 'durasi_pelayanan_min',
+                'headerOptions' => ['class' => 'text-right'],
+                'contentOptions' => ['class' => 'text-right'],
+            ],
+            [
+                'attribute' => 'durasi_pelayanan_max',
+                'headerOptions' => ['class' => 'text-right'],
+                'contentOptions' => ['class' => 'text-right'],
+            ],
         ],
     ]).'</div>'; ?>
 
@@ -181,7 +189,14 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             // 'simulasi_id',
             'nama_pasien',
-            'waktu_kedatangan',
+            [
+                'attribute' => 'waktu_kedatangan',
+                'value' => function($model) {
+                    return date('H:i', strtotime($model->simulasi->tanggal.' '.$model->waktu_kedatangan));
+                },
+                'headerOptions' => ['class' => 'text-center'],
+                'contentOptions' => ['class' => 'text-center'],
+            ],
             [
                 'attribute' => 'Alur Kunjungan',
                 'value' => function($model) {
