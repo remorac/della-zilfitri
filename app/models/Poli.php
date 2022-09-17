@@ -38,7 +38,7 @@ class Poli extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['simulasi_id', 'jumlah_loket', 'durasi_pelayanan_min', 'durasi_pelayanan_max'], 'integer'],
+            [['simulasi_id', 'durasi_pelayanan_min', 'durasi_pelayanan_max'], 'integer'],
             [['nama_poli', 'jumlah_loket', 'waktu_buka', 'waktu_tutup'], 'required'],
             [['waktu_buka', 'waktu_tutup', 'waktu_mulai_istirahat', 'waktu_selesai_istirahat'], 'safe'],
             [['nama_poli'], 'string', 'max' => 255],
