@@ -38,8 +38,8 @@ class Poli extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['simulasi_id', 'durasi_pelayanan_min', 'durasi_pelayanan_max'], 'integer'],
-            [['nama_poli', 'jumlah_loket', 'waktu_buka', 'waktu_tutup'], 'required'],
+            [['simulasi_id', 'jumlah_loket', 'durasi_pelayanan_min', 'durasi_pelayanan_max'], 'integer'],
+            [['nama_poli'], 'required'],
             [['waktu_buka', 'waktu_tutup', 'waktu_mulai_istirahat', 'waktu_selesai_istirahat'], 'safe'],
             [['nama_poli'], 'string', 'max' => 255],
             [['simulasi_id'], 'exist', 'skipOnError' => true, 'targetClass' => Simulasi::className(), 'targetAttribute' => ['simulasi_id' => 'id']],
