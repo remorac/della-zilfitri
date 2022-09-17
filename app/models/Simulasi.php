@@ -47,7 +47,7 @@ class Simulasi extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'nama' => 'Nama',
+            'nama' => 'Nama Simulasi',
             'tanggal' => 'Tanggal',
             'keterangan' => 'Keterangan',
         ];
