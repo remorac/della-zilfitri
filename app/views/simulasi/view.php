@@ -115,13 +115,13 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'waktu_selesai_istirahat',
             [
                 'attribute' => 'durasi_pelayanan_min',
-                'headerOptions' => ['class' => 'text-right'],
-                'contentOptions' => ['class' => 'text-right'],
+                'headerOptions' => ['class' => 'text-right', 'style' => 'width:1px; white-space:nowrap;'],
+                'contentOptions' => ['class' => 'text-right', 'style' => 'width:1px; white-space:nowrap;'],
             ],
             [
                 'attribute' => 'durasi_pelayanan_max',
-                'headerOptions' => ['class' => 'text-right'],
-                'contentOptions' => ['class' => 'text-right'],
+                'headerOptions' => ['class' => 'text-right', 'style' => 'width:1px; white-space:nowrap;'],
+                'contentOptions' => ['class' => 'text-right', 'style' => 'width:1px; white-space:nowrap;'],
             ],
         ],
     ]).'</div>'; ?>
