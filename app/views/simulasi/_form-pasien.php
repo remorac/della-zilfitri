@@ -15,6 +15,8 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'nama_pasien')->textInput() ?>
+
     <?= $form->field($model, 'waktu_kedatangan')->textInput() ?>
 
     <div class="card grid-view tabular-input mt-2 mb-2">

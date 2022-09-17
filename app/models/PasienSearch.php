@@ -18,7 +18,7 @@ class PasienSearch extends Pasien
     {
         return [
             [['id', 'simulasi_id'], 'integer'],
-            [['waktu_kedatangan'], 'safe'],
+            [['nama_pasien', 'waktu_kedatangan'], 'safe'],
         ];
     }
 
@@ -60,6 +60,7 @@ class PasienSearch extends Pasien
         $query->andFilterWhere([
             'id' => $this->id,
             'simulasi_id' => $this->simulasi_id,
+            'nama_pasien' => $this->nama_pasien,
             'waktu_kedatangan' => $this->waktu_kedatangan,
         ]);
 

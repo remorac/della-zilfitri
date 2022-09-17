@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'pasien_id',
-                'value' => 'pasien.id',
+                'value' => 'pasien.nama_pasien',
                 'headerOptions' => ['class' => 'text-center'],
                 'contentOptions' => ['class' => 'text-center'],
             ],
@@ -157,7 +157,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'attribute' => 'pasien_id',
-                    'value' => 'pasien.id',
+                    'value' => 'pasien.nama_pasien',
                     'headerOptions' => ['class' => 'text-center'],
                     'contentOptions' => ['class' => 'text-center'],
                 ],

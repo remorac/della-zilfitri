@@ -180,6 +180,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'contentOptions' => ['style' => 'width:1px; white-space:nowrap;'],
             ],
             // 'simulasi_id',
+            'nama_pasien',
             'waktu_kedatangan',
             [
                 'attribute' => 'Alur Kunjungan',
